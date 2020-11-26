@@ -14,7 +14,6 @@ function PokemonDetail({ match }) {
   });
 
   const [stats, setStats] = useState([]);
-  const [sprites, setSprites] = useState([]);
 
   const fetchPokemon = async () => {
     const fetchPokemon = await fetch(
@@ -23,24 +22,24 @@ function PokemonDetail({ match }) {
 
     const pokemon = await fetchPokemon.json();
     setPokemon(pokemon);
-    console.log(pokemon);
     setStats(pokemon.stats);
-    setSprites(pokemon.sprites);
-    console.log(pokemon.sprites.front_default);
   };
 
   return (
     <>
       <div className="row">
-        <div className="card">
+        <div className="card-detail">
           <div className="card-body">
             <h5 className="card-title">{pokemon.name}</h5>
             <div>
-              <img src={sprites.front_default} alt="pokemon"></img>
+              <img
+                src={`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`}
+                alt="pokemon"
+              ></img>
             </div>
             <div>
-              {stats.map((stat) => (
-                <p>
+              {stats.map((stat, index) => (
+                <p key={index}>
                   {stat.stat.name}: {stat.base_stat}
                 </p>
               ))}
