@@ -11,9 +11,19 @@ function PokemonList() {
     fetch(`https://pokeapi.co/api/v2/pokemon/?limit=10&offset=${page}`)
       .then((response) => response.json())
       .then((json) => {
-        console.log(json.results);
-        setPokemons(json.results);
+        json.results.forEach((pokemon) => {
+          console.log(pokemon);
+          fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}/`)
+            .then((res) => res.json())
+            .then((data) => {
+              setPokemons((prevData) => [...prevData, data]);
+              console.log(data);
+            });
+        });
       });
+    return function cleanUp() {
+      setPokemons([]);
+    };
   }, [page]);
 
   function previousPage() {
@@ -28,27 +38,31 @@ function PokemonList() {
 
   return (
     <div>
-      <div className="row">
+      <div className="row align-items-center">
         {pokemons.map((pokemon) => (
-          <div className="card">
-            <div className="card-body">
-              <h5 className="card-title">{pokemon.name}</h5>
-              <p className="card-text">
-                Some quick example text to build on the card title and make up
-                the bulk of the card's content.
-              </p>
-              <Link to={`/pokemons/${pokemon.name}`}>
-                <button className="btn btn-primary">Pokemon Details</button>
-              </Link>
+          <div className="card-wrapper">
+            <div className="card" key={pokemon.id}>
+              <div className="card-body" key={pokemon.id}>
+                <h5 className="card-title">{pokemon.name}</h5>
+                <img
+                  src={`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`}
+                  alt="pokemon"
+                  className="pokemonPicture"
+                ></img>
+                <Link to={`/pokemons/${pokemon.name}`}>
+                  <button className="btn btn-primary">Pokemon Details</button>
+                </Link>
+              </div>
             </div>
           </div>
         ))}
       </div>
+
       <div className="changePageBtnContainer">
-        <button onClick={previousPage} className="btn btn-secondary">
+        <button onClick={previousPage} className="btn btn-primary">
           Previous Pokemons
         </button>
-        <button onClick={nextPage} className="btn btn-secondary">
+        <button onClick={nextPage} className="btn btn-primary">
           Next Pokemons
         </button>
       </div>
