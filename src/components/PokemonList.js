@@ -1,7 +1,7 @@
 import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
-import { Link } from 'react-router-dom';
+import PokemonDetail from './PokemonDetail';
 
 function PokemonList() {
   const [pokemons, setPokemons] = useState([]);
@@ -41,29 +41,20 @@ function PokemonList() {
       <div className="row align-items-center">
         {pokemons.map((pokemon) => (
           <div className="card-wrapper">
-            <div className="card" key={pokemon.id}>
-              <div className="card-body" key={pokemon.id}>
-                <h5 className="card-title">{pokemon.name}</h5>
-                <img
-                  src={`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`}
-                  alt="pokemon"
-                  className="pokemonPicture"
-                ></img>
-                <Link to={`/pokemons/${pokemon.name}`}>
-                  <button className="btn btn-primary">Pokemon Details</button>
-                </Link>
-              </div>
-            </div>
+            <PokemonDetail
+              pokemonDetails={pokemon}
+              key={pokemon.id}
+            ></PokemonDetail>
           </div>
         ))}
       </div>
 
       <div className="changePageBtnContainer">
         <button onClick={previousPage} className="btn btn-primary">
-          Previous Pokemons
+          Previous
         </button>
         <button onClick={nextPage} className="btn btn-primary">
-          Next Pokemons
+          Next
         </button>
       </div>
     </div>
