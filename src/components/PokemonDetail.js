@@ -1,8 +1,11 @@
 import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
+import ReactCardFlip from 'react-card-flip';
 
-function PokemonDetail({ match }) {
+function PokemonDetail({ pokemonDetails }) {
+  const [isFlipped, setIsFlip] = useState(false);
+
   useEffect(() => {
     fetchPokemon();
   }, []);
@@ -17,7 +20,7 @@ function PokemonDetail({ match }) {
 
   const fetchPokemon = async () => {
     const fetchPokemon = await fetch(
-      `https://pokeapi.co/api/v2/pokemon/${match.params.name}/`
+      `https://pokeapi.co/api/v2/pokemon/${pokemonDetails.name}/`
     );
 
     const pokemon = await fetchPokemon.json();
@@ -25,29 +28,52 @@ function PokemonDetail({ match }) {
     setStats(pokemon.stats);
   };
 
+  function flipCard() {
+    setIsFlip(!isFlipped);
+  }
+
   return (
     <>
-      <div className="row">
-        <div className="card-detail">
-          <div className="card-body">
-            <h5 className="card-title">{pokemon.name}</h5>
-            <div>
+      <ReactCardFlip
+        isFlipped={isFlipped}
+        flipDirection="horizontal"
+        key={pokemon.id}
+      >
+        <div className="card-wrapper">
+          <div className="card">
+            <div className="card-body">
+              <h5 className="card-title">{pokemon.name}</h5>
               <img
                 src={`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`}
                 alt="pokemon"
+                className="pokemonPicture"
               ></img>
-            </div>
-            <div>
-              {stats.map((stat, index) => (
-                <p key={index}>
-                  {stat.stat.name}: {stat.base_stat}
-                </p>
-              ))}
-              <p>weight: {pokemon.weight}</p>
+              <button className="btn btn-primary" onClick={flipCard}>
+                Stats
+              </button>
             </div>
           </div>
         </div>
-      </div>
+        <div>
+          <div className="card-wrapper">
+            <div className="card">
+              <div className="card-body">
+                <div className="card-body-text">
+                  {stats.map((stat, index) => (
+                    <p key={index}>
+                      {stat.stat.name}: {stat.base_stat}
+                    </p>
+                  ))}
+                  <p>weight: {pokemon.weight}</p>
+                </div>
+                <button className="btn btn-primary btn-back" onClick={flipCard}>
+                  ⇆
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ReactCardFlip>
     </>
   );
 }
