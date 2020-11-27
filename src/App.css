@@ -34,6 +34,12 @@ a {
 .btn-primary {
   background-color: #2f6eb5 !important;
   margin-top: 20px;
+  width: 147.13px;
+}
+
+.btn-back {
+  margin-top: 5px;
+  width: 147.13px;
 }
 
 .row {
@@ -77,6 +83,20 @@ a {
 .card-body {
   background-color: #fccb07;
   text-align: center;
+  border-radius: 5px;
+  padding: 1rem !important;
+}
+
+.card-body-text {
+  color: white;
+  background-color: #2f6eb5;
+  height: fit-content;
+  border-radius: 10px;
+}
+
+.card-body-text p {
+  margin-top: 0;
+  margin-bottom: 0;
 }
 
 .card-detail {
@@ -105,4 +125,5 @@ a {
 .pokemonPicture {
   width: 100px;
   height: 100px;
+  margin-top: 15px;
 }
