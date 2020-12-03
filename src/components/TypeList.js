@@ -2,6 +2,7 @@ import React from 'react';
 import { useState } from 'react';
 import { useEffect } from 'react';
 import PokemonDetail from './PokemonDetail';
+import BackToTopArrow from './BackToTopArrow';
 
 export default function TypeList() {
   const [types, setTypes] = useState([]);
@@ -74,6 +75,7 @@ export default function TypeList() {
         ))}
       </div>
       {cardBody}
+      <BackToTopArrow></BackToTopArrow>
     </div>
   );
 }
