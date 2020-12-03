@@ -12,12 +12,10 @@ function PokemonList() {
       .then((response) => response.json())
       .then((json) => {
         json.results.forEach((pokemon) => {
-          console.log(pokemon);
           fetch(`https://pokeapi.co/api/v2/pokemon/${pokemon.name}/`)
             .then((res) => res.json())
             .then((data) => {
               setPokemons((prevData) => [...prevData, data]);
-              console.log(data);
             });
         });
       });
