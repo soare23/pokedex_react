@@ -39,7 +39,7 @@ function PokemonDetail({ pokemonDetails }) {
         flipDirection="horizontal"
         key={pokemon.id}
       >
-        <div className="card-wrapper">
+        <div className="card-wrapper" onMouseOver={flipCard}>
           <div className="card">
             <div className="card-body">
               <h5 className="card-title">{pokemon.name}</h5>
@@ -48,14 +48,14 @@ function PokemonDetail({ pokemonDetails }) {
                 alt="pokemon"
                 className="pokemonPicture"
               ></img>
-              <button className="btn btn-primary" onMouseOver={flipCard}>
+              <button className="btn btn-primary" onClick={flipCard}>
                 Stats
               </button>
             </div>
           </div>
         </div>
         <div>
-          <div className="card-wrapper">
+          <div className="card-wrapper" onMouseLeave={flipCard}>
             <div className="card">
               <div className="card-body">
                 <div className="card-body-text">
@@ -66,10 +66,7 @@ function PokemonDetail({ pokemonDetails }) {
                   ))}
                   <p>weight: {pokemon.weight}</p>
                 </div>
-                <button
-                  className="btn btn-primary btn-back"
-                  onMouseLeave={flipCard}
-                >
+                <button className="btn btn-primary btn-back" onClick={flipCard}>
                   ⇆
                 </button>
               </div>
