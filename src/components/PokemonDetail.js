@@ -48,7 +48,7 @@ function PokemonDetail({ pokemonDetails }) {
                 alt="pokemon"
                 className="pokemonPicture"
               ></img>
-              <button className="btn btn-primary" onClick={flipCard}>
+              <button className="btn btn-primary" onMouseOver={flipCard}>
                 Stats
               </button>
             </div>
@@ -66,7 +66,10 @@ function PokemonDetail({ pokemonDetails }) {
                   ))}
                   <p>weight: {pokemon.weight}</p>
                 </div>
-                <button className="btn btn-primary btn-back" onClick={flipCard}>
+                <button
+                  className="btn btn-primary btn-back"
+                  onMouseLeave={flipCard}
+                >
                   ⇆
                 </button>
               </div>
