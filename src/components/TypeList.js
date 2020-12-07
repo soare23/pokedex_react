@@ -8,6 +8,8 @@ export default function TypeList() {
   const [types, setTypes] = useState([]);
   const [type, setType] = useState('');
   const [pokemonsByType, setPokemonsByType] = useState([]);
+  let typeSelected = document.getElementById('typeSelected');
+  let alert = document.getElementById('alert');
 
   useEffect(() => {
     fetch('https://pokeapi.co/api/v2/type/')
@@ -33,7 +35,17 @@ export default function TypeList() {
   function getPokemonsByType(e) {
     e.preventDefault();
     console.log(e.target.value);
+    alertTypeSelected(e.target.value);
+    setTimeout(() => {
+      alert.style.visibility = 'hidden';
+    }, 2000);
     setType(e.target.value);
+  }
+
+  function alertTypeSelected(selectedType) {
+    typeSelected.innerHTML = selectedType;
+    console.log(alert);
+    alert.style.visibility = 'visible';
   }
 
   let cardBody;
@@ -73,6 +85,11 @@ export default function TypeList() {
             </button>
           </div>
         ))}
+      </div>
+      <div className="alert-container">
+        <div className="alert alert-success" id="alert">
+          <span id="typeSelected"> </span>&nbsp;type pokemons below
+        </div>
       </div>
       {cardBody}
       <BackToTopArrow></BackToTopArrow>
