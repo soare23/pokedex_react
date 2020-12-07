@@ -32,14 +32,16 @@ function PokemonDetail({ pokemonDetails }) {
     setIsFlip(!isFlipped);
   }
 
-  return (
-    <>
+  let cardBody;
+
+  if (/Android|webOS|iPhone|iPad|iPod|BlackBerry/i.test(navigator.userAgent)) {
+    cardBody = (
       <ReactCardFlip
         isFlipped={isFlipped}
         flipDirection="horizontal"
         key={pokemon.id}
       >
-        <div className="card-wrapper" onMouseOver={flipCard}>
+        <div className="card-wrapper">
           <div className="card">
             <div className="card-body">
               <h5 className="card-title">{pokemon.name}</h5>
@@ -55,7 +57,7 @@ function PokemonDetail({ pokemonDetails }) {
           </div>
         </div>
         <div>
-          <div className="card-wrapper" onMouseLeave={flipCard}>
+          <div className="card-wrapper">
             <div className="card">
               <div className="card-body">
                 <div className="card-body-text">
@@ -74,8 +76,49 @@ function PokemonDetail({ pokemonDetails }) {
           </div>
         </div>
       </ReactCardFlip>
-    </>
-  );
+    );
+  } else {
+    cardBody = (
+      <ReactCardFlip
+        isFlipped={isFlipped}
+        flipDirection="horizontal"
+        key={pokemon.id}
+      >
+        <div className="card-wrapper" onMouseOver={flipCard}>
+          <div className="card">
+            <div className="card-body">
+              <h5 className="card-title">{pokemon.name}</h5>
+              <img
+                src={`https://pokeres.bastionbot.org/images/pokemon/${pokemon.id}.png`}
+                alt="pokemon"
+                className="pokemonPicture"
+              ></img>
+              <button className="btn btn-primary">Stats</button>
+            </div>
+          </div>
+        </div>
+        <div>
+          <div className="card-wrapper" onMouseLeave={flipCard}>
+            <div className="card">
+              <div className="card-body">
+                <div className="card-body-text">
+                  {stats.map((stat, index) => (
+                    <p key={index}>
+                      {stat.stat.name}: {stat.base_stat}
+                    </p>
+                  ))}
+                  <p>weight: {pokemon.weight}</p>
+                </div>
+                <button className="btn btn-primary btn-back">⇆</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </ReactCardFlip>
+    );
+  }
+
+  return <>{cardBody}</>;
 }
 
 export default PokemonDetail;
